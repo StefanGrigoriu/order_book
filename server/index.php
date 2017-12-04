@@ -67,7 +67,6 @@ $app->post(
     function () use ($app) 
     {
         $users = $app->request->getJsonRawBody();
-
         $phql = 'INSERT INTO OrderBook\Models\Users (name, email, password) VALUES (:name:, :email:, :password:)';
 
         $status = $app->modelsManager->executeQuery(
