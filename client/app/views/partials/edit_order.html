@@ -1,0 +1,20 @@
+<div class="col-md-12" style="background: #fff">
+	<div class="modal-header">
+		<div class="modal-title">
+			<h3>Editing order with id : {{ceva.id_order}}
+<div class="btn-group pull-right" ng-click="$dismiss();">
+				<div class=" btn-danger btn">
+					<i class="fa fa-remove"></i>
+				</div>
+			</div>
+			</h3>
+			
+		</div>	
+	</div>
+	<div class="modal-body">
+		<label>Description: </label><input type="text" name="description" ng-model="ceva.description" class="form-control">
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-success btn-block" ng-click="$close();">SAVE</button>
+	</div>
+</div>

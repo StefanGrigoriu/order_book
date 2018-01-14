@@ -15,10 +15,9 @@
           </div>
 
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
-
             <ul class="nav navbar-nav">
               <li><a href="#/home" ng-class="location.$$url == '/home' ? 'active' : ''">Home</a></li>
-              <li><a href="#/dasboard" ng-class="location.$$url == '/dashboard' ? 'active' : ''">Dashboard </a></li>
+              <li ng-if="auth.isLoggedIn"><a href="#/dasboard" ng-class="location.$$url == '/dashboard' ? 'active' : ''">Dashboard </a></li>
               <li><a ng-href="#/about" ng-class="location.$$url == '/about' ? 'active' : ''">About</a></li>
               <li><a ng-href="#/contact" ng-class="location.$$url == '/contact' ? 'active' : ''">Contact</a></li>
               <li><a ng-href="#/login" ng-if="!auth.isLoggedIn" ng-class="location.$$url == '/login' ? 'active' : ''">Login</a></li>

@@ -1,1 +1,21 @@
 <p> This is dashboard. </p>
+
+<table class="table table-bordered table-hover">
+	<thead>
+		<th>ID</th>
+		<th>DESCRIPTION</th>
+		<th>CLIENT</th>
+		<th>ACTION</th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(key, row) in temp.objectList">
+			<td>{{row.id_order}}</td>
+			<td>{{row.description}}</td>
+			<td>Client</td>
+			<td>
+				<button class="btn btn-xs btn-primary" ng-click="editOrder(row);"><i class="fa fa-pencil"></i></button>
+				<button class="btn btn-xs btn-danger" ng-click="removeOrder(row, key);"><i class="fa fa-remove"></i></button>
+			</td>
+		</tr>
+	</tbody>
+</table>

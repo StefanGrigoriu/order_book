@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-angular
+var app = angular
   .module('orderBookApp', [
     'ngAnimate',
     'ngCookies',
@@ -16,6 +16,9 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch'
+    , 'ui.bootstrap'
+    , 'dialogs.main'
+    , 'dialogs.default-translations'
   ])
   .config(function ($routeProvider, $locationProvider) 
   {
@@ -44,4 +47,21 @@ angular
       .otherwise({
         redirectTo: '/login'
       });
+
+     
   });
+
+  app.run(['$rootScope', '$location', 'authService', function($rootScope, $location, authService)
+  { 
+     var publicPages = ['/home', '/about', '/contact', 'login', '/dashboard'];
+          $rootScope.$on('$locationChangeStart', function(event)
+          {
+              if(!authService.temp.isLoggedIn)
+              {
+                 if(publicPages.indexOf($location.path()) == -1)
+                { 
+                    $location.path('/login');
+                }
+              } 
+          });
+  }]);
