@@ -7,31 +7,64 @@ use \Exceptions;
 
 class UsersController extends BaseController 
 {
-	
-	public function get()
+	public function __construct()
 	{
-		// return 'what';
-		// return 'error';
-		$q = 'SELECT * FROM OrderBook\Models\Users';
-		$query = $this->modelsManager->createQuery($q);
-		$result = $query->execute();	
-		return json_encode(['get' => 'get'
-		,'result' => $result]);
+		$this->dbManager = new Users();
 	}
 
-	public function getOne()
+	public static function returnObject($data = [], $status = null, $message = null)
 	{
-
-		return 'getone';
+		return json_encode(['message' => $message
+			,'data' => $data
+			, 'status' => $status]);
 	}
 
 	public function post()
 	{
 		$data = $this->requestBody;
-		$q = 'INSERT INTO \OrderBook\Models\Users (name, email, password) VALUES ("'.$data['name'].'","'.$data['email'].'", "'.$data['password'].'")';
+		$user = new Users();
+		$resources = $user->findFirst([
+			'email = :email:',
+			'bind' => [
+					'email' =>	$data['email']
+					]
+		]);
+	
+		if($resources === false)
+		{
+			// nu exista userul cu acel email
+			$user->setName($data['name']);
+			$user->setEmail($data['email']);
+			$user->setPassword(sha1($data['password']));
+			$resource = $user->save();
+			if($resource)
+			{
+				return $this->returnObject(null, 'ITS OK', 'User has been created.');
+			}
+			else
+			{ 
+				$messages = $user->getMessages();
+					$aux = '';
+				    foreach ($messages as $message) {
+     							   $aux .=' '.$message;
+						}
+				return $this->returnObject(null, 'ITS OK', $aux);
+			}
+		}
+		else
+		{
+			return $this->returnObject(null, 'ITS OK', 'User could not be saved because there is another user with that email.');
+		}
+		return json_encode($resources);
+		// $user->setName($data['name']);
+		// $user->setEmail($data['email']);
+		// $user->setPassword($data['password']);
+
+
+		// $q = 'INSERT INTO \OrderBook\Models\Users (name, email, password) VALUES ("'.$data['name'].'","'.$data['email'].'", "'.$data['password'].'")';
 	 	
-		$query = $this->modelsManager->createQuery($q);
-		$result = $query->execute();
+		// $query = $this->modelsManager->createQuery($q);
+		// $result = $query->execute();
 
 		return json_encode($data);
 	}
@@ -41,8 +74,8 @@ class UsersController extends BaseController
 		return 'put';
 	}
 
-	public function delete()
-	{
-		return 'delete';
-	}
+	// public function delete()
+	// {
+	// 	return 'delete';
+	// }
 }
