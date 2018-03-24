@@ -7,7 +7,17 @@
  * # MainCtrl
  * Controller of the orderBookApp
  */
-angular.module('orderBookApp').controller('EditOrderCtrl', function ($scope, data) 
+angular.module('orderBookApp').controller('ManageOrderCtrl', function ($scope, data) 
 {
-   $scope.ceva = data;
+
+	  var createNew = function()
+	   {
+	   	 return {
+	   	 	is_new: true
+	   	 	, description: ''
+	   	 }
+	   };
+   $scope.ceva = data ? data : createNew();
+
+ 
 });
