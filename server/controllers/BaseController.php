@@ -13,18 +13,32 @@ class BaseController extends \Phalcon\DI\Injectable
 	public function get()
 	{
 
-		//phalcon method to get * orders from order
-		// $order = new Orders();
 		$registry = $this->di->getRegistry();
+		$q = $this->request->get('q');
+		if($q)
+			$q = json_decode($q);
+
+		$condition = 'id_company = :id_company:';
+		// return json_encode($condition);
+		$bind = [
+			'id_company' => $registry['user']['id_company']
+		];
+		
+		if(isset($q) && $q)
+			foreach ($q as $key => $value)
+			{
+				# code...
+				$condition .= ' AND '.$value->key .' '.$value->op.' :key'.$key.':';
+				$bind['key'.$key] = $value->op == 'LIKE' ? '%'.$value->value.'%' : $value->value;
+			}
+			// return json_encode(['bind' => $bind, 'condition' => $condition]);
 		$data = $this->dbManager->find(
 			[
-			'conditions' => 'id_company =:id_company:'
-			, 'bind' => [
-				'id_company' => $registry['user']['id_company']
-				]	
+			'conditions' => $condition
+			, 'bind' => $bind
 			])->toArray();
 	
-		return $this->returnObject($data, 'ITS OK', 'All users list that have been requested');
+	return $this->returnObject($data, 'ITS OK', 'All users list that have been requested');
 		
 	}
 

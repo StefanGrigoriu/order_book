@@ -2,8 +2,25 @@
 $collections = [];
 
     //Users
+    //Creating phalcon mvc (ModelViewController) micro (micro type app) collection that specifies a list of routes that can be accessed by the client 
     $collection = new \Phalcon\Mvc\Micro\Collection();
+    //Setting the class that will handle requests for the base route </users>, for this example will be class UsersController
     $collection->setPrefix('/users')->setHandler('OrderBook\Controllers\UsersController')->setLazy(true);
+    //An item of the collections </users> that will handle GET requests
+    $collection->get('/', 'get');
+    //An item of the collections </users> that will handle GET request that has a specific id
+    $collection->get('/{id:[0-9]+}', 'getOne');
+    //An item of the collections </users> that will handle POST requests
+    $collection->post('/', 'post');
+    //An item of the collections </users> that will handle PUT requests
+    $collection->put('/{id:[0-9]+}', 'put');
+    //An item of the collections </users> that will handle DELETE requests
+    $collection->delete('/{id:[0-9]+}', 'delete');
+     $collections[] = $collection;
+
+    //Orders
+    $collection = new \Phalcon\Mvc\Micro\Collection();
+    $collection->setPrefix('/orders')->setHandler('OrderBook\Controllers\OrdersController')->setLazy(true);
     $collection->get('/', 'get');
     $collection->get('/{id:[0-9]+}', 'getOne');
     $collection->post('/', 'post');
@@ -11,9 +28,36 @@ $collections = [];
     $collection->delete('/{id:[0-9]+}', 'delete');
     $collections[] = $collection;
 
-foreach($collections as $collection){
-    $app->mount($collection);
-}
+        //UserType
+    $collection = new \Phalcon\Mvc\Micro\Collection();
+    $collection->setPrefix('/user_type')->setHandler('OrderBook\Controllers\UserTypeController')->setLazy(true);
+    $collection->get('/', 'get');
+    $collection->get('/{id:[0-9]+}', 'getOne');
+    $collection->post('/', 'post');
+    $collection->put('/{id:[0-9]+}', 'put');
+    $collection->delete('/{id:[0-9]+}', 'delete');
+    $collections[] = $collection;
+
+        //Company
+    $collection = new \Phalcon\Mvc\Micro\Collection();
+    $collection->setPrefix('/company')->setHandler('OrderBook\Controllers\CompanyController')->setLazy(true);
+    $collection->get('/', 'get');
+    $collection->get('/{id:[0-9]+}', 'getOne');
+    $collection->post('/', 'post');
+    $collection->put('/{id:[0-9]+}', 'put');
+    $collection->delete('/{id:[0-9]+}', 'delete');
+    $collections[] = $collection;
+
+        //Login
+    $collection = new \Phalcon\Mvc\Micro\Collection();
+    $collection->setPrefix('/security')->setHandler('OrderBook\Controllers\LoginController')->setLazy(true);
+    $collection->post('/login', 'login');
+    $collections[] = $collection;
+
+    foreach($collections as $collection)
+    {
+        $app->mount($collection);
+    }
 
 // $app->get(
 //     '/api/users',

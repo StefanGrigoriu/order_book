@@ -27,22 +27,27 @@ var app = angular
       .when('/home', {
         templateUrl: 'views/pages/home.html'
         , controller: 'HomeCtrl'
+        //home.js
       })
       .when('/about', {
         templateUrl: 'views/pages/about.html'
         , controller: 'AboutCtrl'
+        //about.js
       })
        .when('/contact', {
         templateUrl: 'views/pages/contact.html'
         , controller: 'ContactCtrl'
+        //contact.js
       })
         .when('/login', {
         templateUrl: 'views/pages/login.html'
         , controller: 'LoginCtrl'
+        //login.js
       })
       .when('/dashboard', {
         templateUrl: 'views/pages/dashboard.html'
         , controller: 'DashboardCtrl'
+        //dashboard.js
       })
       .otherwise({
         redirectTo: '/login'
@@ -56,7 +61,12 @@ var app = angular
      var publicPages = ['/home', '/about', '/contact', 'login', '/dashboard'];
           $rootScope.$on('$locationChangeStart', function(event)
           {
-              if(!authService.temp.isLoggedIn)
+            // if(  $http.defaults.headers.common['Authorization'] = sessionStorage.getItem('authorization');)
+              if(sessionStorage.getItem('authorization'))
+              {
+               authService.temp.isLoggedIn = true; 
+              }
+              else if(!authService.temp.isLoggedIn)
               {
                  if(publicPages.indexOf($location.path()) == -1)
                 { 

@@ -9,9 +9,11 @@
  */
 angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, authService, $location, dialogs, config, $http, Request) 
 {
-	// 	if(!authService.temp.isLoggedIn)
-	// 	$location.path('/');
-	// console.dir('hello');
+  $scope.dateOptions = {
+    // dateDisabled: disabled,
+    formatYear: 'YYYY-MM-DD',
+    startingDay: 1
+  };
    $scope.temp = {
    	objectList: [
    	{id_order: 1,  description:'Aenean pretium est at justo finibus, in varius mauris finibus.', client_name: 'Samy'}
@@ -28,12 +30,41 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
    	,{id_order: 12, description: 'Aenean non ipsum id nulla euismod tempus a sed urna.', client_name: 'Oloi Claudiu'}
    	,{id_order: 13, description: 'Suspendisse eu erat id erat mattis lacinia.', client_name: 'Cioanu Cristian'}
    	]
-   	, filters: {}
+   	, filters: {
+         description: ''
+         , client_name: ''
+         , id_order: ''
+         , date:''
+      }
    };
+   console.dir(moment());
    console.dir(config.serverURL);
    $scope.load = function()
    {
-         Request.get('orders'
+
+         var url = 'orders';
+         var q = false;
+         var queryString = [];
+         angular.forEach($scope.temp.filters, function(key, value)
+         {
+            if($scope.temp.filters[value])
+            {
+               queryString.push({
+                  value: value == 'date_to' ? moment(moment($scope.temp.filters[value]).endOf('day')).format('YYYY-MM-DD HH:mm:ss') : 
+                  value == 'date_from' ? moment(moment($scope.temp.filters[value]).startOf('day')).format('YYYY-MM-DD HH:mm:ss') : $scope.temp.filters[value] 
+                  , key: value == 'date_to' || value == 'date_from' ? 'created_at' : value
+                  , op: value == 'client_name' || value == 'description' ? 'LIKE' : value == 'date_to' ? '<=' : value == 'date_from' ? '>=' : '='
+               });
+
+               if(!q) q = true;
+            }
+         });    
+         if(q) 
+            url += '?q=' + JSON.stringify(queryString);
+         console.dir(url);
+         // debugger;
+
+         Request.get(url
             , function(data)
          {
             if(data)
@@ -49,7 +80,8 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
          {
             console.dir(data);
          });
-   }();
+   };
+   $scope.load();
 
    $scope.addNew = function()
    {

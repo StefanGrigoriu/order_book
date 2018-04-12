@@ -1,21 +1,85 @@
-<p> This is dashboard. </p>
+<div class="form form-horizontal">
 
-<table class="table table-bordered table-hover">
-	<thead>
-		<th>ID</th>
-		<th>DESCRIPTION</th>
-		<th>CLIENT</th>
-		<th>ACTION</th>
-	</thead>
-	<tbody>
-		<tr ng-repeat="(key, row) in temp.objectList">
-			<td>{{row.id_order}}</td>
-			<td>{{row.description}}</td>
-			<td>Client</td>
-			<td>
-				<button class="btn btn-xs btn-primary" ng-click="editOrder(row);"><i class="fa fa-pencil"></i></button>
-				<button class="btn btn-xs btn-danger" ng-click="removeOrder(row, key);"><i class="fa fa-remove"></i></button>
-			</td>
-		</tr>
-	</tbody>
-</table>
+	<div class="form-group">
+		<div class="col-lg-12 col-md-3 col-sm-12 col-xs-12">
+		<button class="btn btn-success btn-block pull-right" ng-click="addNew();">NEW ORDER</button>		
+		</div>
+	</div>
+
+		<div class="form-group">
+		<div class="col-md-3">
+			<div class="input-group">
+				<span class="input-group-addon">
+					<i class="fa fa-search">
+						
+					</i>
+				</span>
+				<input type="text" name="id" class="form-control" ng-model="temp.filters.id_order" placeholder="Search id" ng-change="load()">
+			</div>
+		</div>
+		<div class="col-md-3">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-search">
+						
+						</i>
+					</span>
+				<input type="text" name="description" class="form-control" ng-model="temp.filters.description" placeholder="Description" ng-change="load()">
+			</div>
+		</div>
+		<div class="col-md-3">
+			<div class="input-group">
+			 <span class="input-group-addon">
+					<i class="fa fa-search">
+						
+					</i>
+				</span>
+				<input type="text" name="client" class="form-control" ng-model="temp.filters.client_name" placeholder="Client" ng-change="load()">
+			</div>
+		</div>
+		<div class="col-md-3">
+				<div class="input-group">
+		   <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open = true"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+				 <input ng-change="load()" type="text" class="form-control" uib-datepicker-popup ng-model="temp.filters.date_from" is-open="open" datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="Date from" />
+			</div>
+		</div>
+		<div class="col-md-3 col-md-offset-9" style="margin-top: 5px">
+				<div class="input-group">
+		   <span class="input-group-btn">
+            <button type="button" class="btn btn-default" ng-click="open2 = true"><i class="glyphicon glyphicon-calendar"></i></button>
+          </span>
+				 <input ng-change="load()" type="text" class="form-control" uib-datepicker-popup ng-model="temp.filters.date_to" is-open="open2" datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="Date to" />
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-12">
+				<table class="table table-bordered table-hover">
+			<thead>
+				<th>ID</th>
+				<th>DESCRIPTION</th>
+				<th>CLIENT</th>
+				<th>CREATED</th>
+				<th>ACTION</th>
+			</thead>
+			<tbody>
+				<tr ng-repeat="(key, row) in temp.objectList">
+					<td>{{row.id_order}}</td>
+					<td>{{row.description}}</td>
+					<td>{{row.client_name}}</td>
+					<td>{{row.created_at}}</td>
+					<td>
+						<button class="btn btn-xs btn-primary" ng-click="editOrder(row, key);"><i class="fa fa-pencil"></i></button>
+						<button class="btn btn-xs btn-danger" ng-click="removeOrder(row, key);"><i class="fa fa-remove"></i></button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+
+	</div>
+</div>
+

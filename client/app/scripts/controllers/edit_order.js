@@ -17,6 +17,7 @@ angular.module('orderBookApp').controller('ManageOrderCtrl', function ($scope, d
 	   	 	, description: ''
 	   	 }
 	   };
+	   
    $scope.ceva = data ? data : createNew();
 
  

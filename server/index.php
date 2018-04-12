@@ -1,10 +1,25 @@
 <?php
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Headers: *");
+header("Access-Control-Allow-Methods: *");
 use Phalcon\Loader;
 use Phalcon\Mvc\Micro;
 use Phalcon\Di\FactoryDefault;
 use Phalcon\Http\Response;
 use Phalcon\Db\Adapter\Pdo\Mysql as PdoMysql;
 use  Phalcon\Mvc\Model\Manager as ModelsManager;
+use Phalcon\Registry;
+
+// function errorHandler($code, $error_message)
+// {
+//     throw new \OrderBook\Exceptions\HTTPException($error_message, '500');
+// }
+// set_error_handler('errorHandler', 2147483647);
+// use \OrderBook\Exceptions\HTTPException;
 try {
   // Use Loader() to autoload our model
 $loader = new Loader();
@@ -37,6 +52,19 @@ $di->set(
     }
 );
 
+$di->set('security', function()
+{
+    return new \OrderBook\Controllers\Security();
+});
+//Created a class registry that will save 
+//the information and you can access the data
+// threw all the classes (static method)
+$di->set('registry', function()
+{
+    return new \Phalcon\Registry();
+}, true);
+
+
 $di->setShared('requestBody', function()
 {
     $in = file_get_contents('php://input');
@@ -54,11 +82,20 @@ $di->setShared('requestBody', function()
 // Create and bind the DI to the application
 $app = new Micro($di);
 
-include __DIR__. '/routes/routes.php';
+
 
 $app->before(function() use ($app, $di)
 {
-        // var_dump($app->getRouter()->getMatchedRoute()->getPattern());
+    $security = $di->getSecurity();
+    $role = $security->checkAccess(['email' => $app->request->getServer('PHP_AUTH_USER'), 'password' => $app->request->getServer('PHP_AUTH_PW')]);
+    return $role;
+});
+
+include __DIR__. '/routes/routes.php';
+
+$app->notFound(function() use ($app)
+{
+    // throw new \OrderBook\Exceptions\HTTPException('routeNotFound', 404);
 });
 
 $app->after(function() use ($app)
@@ -66,20 +103,15 @@ $app->after(function() use ($app)
     return $app->getReturnedValue();
 });
 
-$app->notFound(function() use ($app)
-{
-    throw new \OrderBook\Exceptions\HTTPException('routeNotFound', 404);
-});
-
 $app->handle();
 // Retrieves all robots  
 }
 catch(\OrderBook\Exceptions\HTTPException $e)
 {
-    return $e;
+    $e->send();
 }
 catch(\Exceptions $e)
 {
-    return $e;
+    $e->send();
 }
 
