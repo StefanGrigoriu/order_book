@@ -37,8 +37,7 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
          , date:''
       }
    };
-   console.dir(moment());
-   console.dir(config.serverURL);
+   
    $scope.load = function()
    {
 
@@ -61,8 +60,6 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
          });    
          if(q) 
             url += '?q=' + JSON.stringify(queryString);
-         console.dir(url);
-         // debugger;
 
          Request.get(url
             , function(data)
