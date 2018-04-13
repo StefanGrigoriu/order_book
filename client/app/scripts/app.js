@@ -34,9 +34,9 @@ var app = angular
         , controller: 'AboutCtrl'
         //about.js
       })
-       .when('/contact', {
-        templateUrl: 'views/pages/contact.html'
-        , controller: 'ContactCtrl'
+       .when('/admin', {
+        templateUrl: 'views/pages/admin.html'
+        , controller: 'AdminCtrl'
         //contact.js
       })
         .when('/login', {

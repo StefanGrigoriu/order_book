@@ -37,6 +37,8 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
          , date:''
       }
    };
+
+   console.dir(moment().format('YYYY-MM-DD HH:mm:ss'));
    
    $scope.load = function()
    {

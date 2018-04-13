@@ -44,9 +44,9 @@ class Company extends BaseModel
 		return $this->config;
 	}
 
-	// public function beforeCreate()
-	// {
-	// 	$this->id_company = !$this->id_company ? 1 : $this->id_company;
-	// 	$this->created_at = date("Y-m-d H:i:s");
-	// }
+	public function beforeCreate()
+	{
+		// $this->id_company = !$this->id_company ? 1 : $this->id_company;
+		// $this->created_at = date("Y-m-d H:i:s");
+	}
 }

@@ -1,0 +1,120 @@
+<div class="col-md-12">
+	<div class="row">
+		<!-- <div class="btn-group"> -->
+			<div class="col-md-6">
+				<button class="btn btn-primary btn-block" ng-click="temp.selected = false">
+					Add Company
+				</button>
+			</div>
+			<div class="col-md-6">
+				<button class="btn btn-warning btn-block" ng-click="temp.selected = true">
+					Add User
+				</button>	
+			</div>
+
+			<!-- </div> -->
+		</div>
+
+		<div class="row" style="margin-top:10px" ng-if="temp.selected" ng-form="User">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+						<div class="form form-horizontal">
+							<div class="form-group" ng-class="User.company.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Company {{ temp.user.id_company}}:
+								</label>
+								<div class="col-md-10">
+									<input 
+										typeahead-min-length="2"
+										ng-model="temp.companySearch"
+										uib-typeahead="company.name for company in getCompany($viewValue)"
+										typeahead-on-select="setCompany($item)"
+										type="text" 
+										name="company" 
+										class="form-control" 
+										placeholder="type a name" 
+										
+										required>	
+								</div>
+
+							</div>
+							<div class="form-group" ng-class="User.name.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Name:
+								</label>
+								<div class="col-md-10">
+									<input ng-model="temp.user.name" type="text" name="name" class="form-control" placeholder="eg. : Stefan" required>	
+								</div>
+							</div>
+							<div class="form-group" ng-class="User.email.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Email:
+								</label>
+								<div class="col-md-10">
+									<input ng-model="temp.user.email" type="email" name="email" class="form-control" placeholder="eg. : stefan@gmail.com" required>	
+								</div>
+							</div>
+
+							<div class="form-group" ng-class="User.password.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Password:
+								</label>
+								<div class="col-md-10">
+									<input ng-model="temp.user.password"  type="password" name="password" class="form-control" placeholder="eg. : numeric or text" required>	
+								</div>
+							</div>
+							<div class="form-group" ng-class="User.confirm_password.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Confirm:
+								</label>
+								<div class="col-md-10">
+									<input ng-model="temp.user.confirm_password" type="password" name="confirm_password" class="form-control" placeholder="eg. : retype the password" required>	
+								</div>
+							</div>
+							<div class="form-group" ng-if="temp.user.password != temp.user.confirm_password">
+								<div class="col-md-12">
+									<p class="has-error">The passwords are different.</p>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<button ng-disabled="User.$invalid || temp.user.password != temp.user.confirm_password" class="btn btn-success btn-block" ng-click="createUser();">CREATE USER</button>
+			</div>
+		</div>
+
+		<div class="row" style="margin-top:10px" ng-if="!temp.selected" ng-form="Company">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-body">
+
+						<div class="form form-horizontal">
+							<div class="form-group" ng-class="Company.company_name.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Company name:
+								</label>
+								<div class="col-md-10">
+									<input type="text" name="company_name" class="form-control" placeholder="type a name" 
+									ng-model="temp.company.name"
+									required>	
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-12">
+				<button ng-disabled="Company.$invalid" class="btn btn-success btn-block" ng-click="createCompany();">CREATE COMPANY </button>
+			</div>
+		</div>
+
+	</div>

@@ -18,49 +18,85 @@ class CompanyController extends BaseController
 			,'data' => $data
 			, 'status' => $status]);
 	}
+//de modificat, get-ul, voi scoate momentan la join id_Company = id_company celui ce face request
+	// si de facut o alta functi de search speciala in care nu folosim id_company = ..
+
+	public function get()
+	{
+
+		$registry = $this->di->getRegistry();
+		$q = $this->request->get('q');
+		// var_dump($q);
+		if($q)
+			$q = json_decode($q);
+
+		$condition = '';
+			// 'id_company' => $registry['user']['id_company']
+		// return json_encode($condition);
+		$bind = [
+
+		];
+		// return json_encode($q);
+		if(isset($q) && $q)
+		{
+			foreach ($q as $key => $value)
+			{
+				# code...
+				$condition .= $value->key .' '.$value->op.' :key'.$key.':';
+				$bind['key'.$key] = $value->op == 'LIKE' ? '%'.$value->value.'%' : $value->value;
+			}
+		}
+
+			// return json_encode(['bind' => $bind, 'condition' => $condition]);
+		$data = $this->dbManager->find(
+			[
+				'conditions' => $condition
+				, 'bind' => $bind
+			])->toArray();
+
+		return $this->returnObject($data, 'ITS OK', 'All users list that have been requested');
+
+	}
 
 	public function post()
 	{
-		// return 'im here';
 		$data = $this->requestBody;
-		$new_company = [
-			'name' => null
-			, 'config' => null
-		];
-
-		
-		if(isset($data) && isset($data['name']))
-		{
-			$company = new Company();
-			$new_company = array_merge((array)$new_company, (array)$data);
-			// return $new_company['name'];
-			$company->setName($new_company['name']);
-			$company->setConfig($new_company['config']);
-			// return $company->getName();
-			// return json_encode($new_company);
-			$resource = $company->create();
-			if($resource !== false)
-			{
-				return $this->returnObject(null, 'ITS OK', 'Company has been created');
-			}
-			else
-			{
-				 $messages = $company->getMessages();
-					$aux = '';
-				    foreach ($messages as $message) {
-     							   $aux .=' '.$message;
-						}
-				return $this->returnObject(null, 'ITS OK', $aux);
-			}
-		}
-		return $this->returnObject(null, 'ITS OK', 'Company has not been created, data is missing');
-
-		// $q = 'INSERT INTO \OrderBook\Models\Users (name, email, password) VALUES ("'.$data['name'].'","'.$data['email'].'", "'.$data['password'].'")';
-	 	
-		// $query = $this->modelsManager->createQuery($q);
-		// $result = $query->execute();
-
+		// var_dump($data);
 		// return json_encode($data);
+
+		$company = new Company();
+		$resources = $company->findFirst([
+			'name = :name:',
+			'bind' => [
+				'name' =>	$data['name']
+			]
+		]);
+		// return json_encode($resources);
+
+// var_dump($resources);
+		// if($resources !== false)
+		// 	return $this->returnObject(null, 'ITS not ok', 'There is already a company with that name.');
+		$company->setName($data['name']);
+		$resource = $company->save();
+		if($resource !== false)
+		{
+			return $this->returnObject(null, 'ITS OK', 'Company has been created');
+		}
+		
+		// if(isset($data) && isset($data['name'])
+		// {
+		// 	$Company->setName($data['name']);
+
+		// 	if(isset($data['config']) && $data['config'])
+		// 		$company->setConfig($data['config']);
+
+		// 	$resource = $company->save();
+			// if($resource !== false)
+			// {
+			// 	return $this->returnObject(null, 'ITS OK', 'Company has been created');
+			// }
+		// }
+		return $this->returnObject(null, 'ITS OK', 'Company has not been created, data is missing');
 	}
 
 	public function put()

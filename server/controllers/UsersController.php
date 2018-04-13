@@ -36,6 +36,8 @@ class UsersController extends BaseController
 			$user->setName($data['name']);
 			$user->setEmail($data['email']);
 			$user->setPassword(sha1($data['password']));
+			$user->setIdCompany($data['id_company']);
+			$user->setIdUserType($data['id_user_type']);
 			$resource = $user->save();
 			if($resource)
 			{
