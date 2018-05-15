@@ -130,17 +130,16 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
                'Orders': {
                   'description' : data.description
                   , 'client_name': data.client_name
+                  , status: data.status
+                  , status_password: data.status_password
                }
             }
             , function(resp)
          {
-            //succes
-            console.dir(resp);
             if(resp && resp.response)
             {
 
               //In case he closes with save button
-              console.dir(key);
                $scope.temp.objectList.splice(key,1);
                $scope.temp.objectList.splice(key,0, resp.response);
             }
@@ -157,7 +156,6 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
       {
          //In case he closes without saving
       });
-	console.dir(order);
    };
 
    $scope.removeOrder = function(order, key)

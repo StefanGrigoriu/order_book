@@ -8,16 +8,17 @@
  * Controller of the orderBookApp
  */
  angular.module('orderBookApp')
- .controller('AdminCtrl', function ($scope, Request, $q) 
+ .controller('AdminCtrl', function ($scope, Request, $q, authService) 
  {
-
+	$scope.auth = authService.temp;
+	
  	$scope.temp = {
  		user:{
  			name: ''
  			, email: ''
  			, password: ''
  			, id_company: ''
- 			, id_user_type: 2
+ 			, id_user_type: "3"
  		}
  		, company: {
  			name: ''
@@ -26,6 +27,12 @@
  		, companySearch: ''
  		, selected: false
  	};
+
+ 	if(authService.temp.user.id_user_type == '2')
+ 	{
+ 		$scope.temp.user.id_company = authService.temp.user.id_company;
+ 		$scope.temp.selected = true;
+ 	}
  	$scope.createCompany = function()
  	{
  		Request.post('company' 
@@ -42,7 +49,7 @@
 	            			, email: ''
 	            			, password: ''
 	            			, id_company: ''
-	            			, id_user_type: 2
+	            			, id_user_type: "3"
 	            		}
 	            		, company: {
 	            			name: ''
@@ -51,6 +58,12 @@
 	            		, companySearch: ''
 	            		, selected: false
 	            	};
+
+	            		if(authService.temp.user.id_user_type == '2')
+ 	{
+ 		$scope.temp.user.id_company = authService.temp.user.id_company;
+ 		$scope.temp.selected = true;
+ 	}
 	            	alert('Company has been added');
 	            }
 	        }
@@ -63,13 +76,11 @@
 
  	$scope.createUser = function()
  	{
- 		console.dir($scope.temp.user);
  		Request.post('users' 
  			, $scope.temp.user
  			, function(resp)
  			{
 	            //succes
-	            console.dir(resp);
 	            if(resp)
 	            {
 	            	$scope.temp = {
@@ -78,7 +89,7 @@
 	            			, email: ''
 	            			, password: ''
 	            			, id_company: ''
-	            			, id_user_type: 2
+	            			, id_user_type: "3"
 	            		}
 	            		, company: {
 	            			name: ''
@@ -87,7 +98,7 @@
 	            		, companySearch: ''
 	            		, selected: false
 	            	};
-	            	alert('User has been added');
+	            		alert(resp.message);
 	            }
 	        }
 	        , function(resp)

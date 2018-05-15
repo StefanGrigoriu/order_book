@@ -26,10 +26,10 @@ class UsersController extends BaseController
 		$resources = $user->findFirst([
 			'email = :email:',
 			'bind' => [
-					'email' =>	$data['email']
-					]
+				'email' =>	$data['email']
+			]
 		]);
-	
+
 		if($resources === false)
 		{
 			// nu exista userul cu acel email
@@ -46,16 +46,16 @@ class UsersController extends BaseController
 			else
 			{ 
 				$messages = $user->getMessages();
-					$aux = '';
-				    foreach ($messages as $message) {
-     							   $aux .=' '.$message;
-						}
+				$aux = '';
+				foreach ($messages as $message) {
+					$aux .=' '.$message;
+				}
 				return $this->returnObject(null, 'ITS OK', $aux);
 			}
 		}
 		else
 		{
-			return $this->returnObject(null, 'ITS OK', 'User could not be saved because there is another user with that email.');
+			return $this->returnObject(null, '409', 'User could not be saved because there is another user with that email.');
 		}
 		return json_encode($resources);
 		// $user->setName($data['name']);
@@ -64,16 +64,38 @@ class UsersController extends BaseController
 
 
 		// $q = 'INSERT INTO \OrderBook\Models\Users (name, email, password) VALUES ("'.$data['name'].'","'.$data['email'].'", "'.$data['password'].'")';
-	 	
+
 		// $query = $this->modelsManager->createQuery($q);
 		// $result = $query->execute();
 
 		return json_encode($data);
 	}
 
-	public function put()
+	public function put($id)
 	{
-		return 'put';
+		$data = $this->requestBody;
+
+		$user = $this->dbManager->findFirst([
+			'conditions' => 'id_user = :id:'
+			, 'bind' => [
+				'id' => $id
+			]	
+		]);
+		if(isset($data['name']))
+			$user->setName($data['name']);
+		if(isset($data['email']))
+			$user->setEmail($data['email']);
+		if(isset($data['mobile_no']))
+			$user->setMobileNo($data['mobile_no']);
+		if(isset($data['new_password']) && isset($data['confirm_password']))
+		{
+			$user->setPassword(sha1($data['new_password']));
+		}
+		$user->save();
+
+			return $this->returnObject($user->toArray(), '200', 'Profile has been updated');
+
+	// return json_encode([$user, $data]);
 	}
 
 	// public function delete()

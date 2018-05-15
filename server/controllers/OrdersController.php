@@ -13,36 +13,6 @@ class OrdersController extends BaseController
 		$this->dbManager = new Orders();
 	}
 
-	// public function get()
-	// {
-	// 	$registry = $this->di->getRegistry();
-	// 	$q = $this->request->get('q');
-	// 	if($q)
-	// 		$q = json_decode($q);
-
-	// 	$condition = 'id_company = :id_company:';
-	// 	// return json_encode($condition);
-	// 	$bind = [
-	// 		'id_company' => $registry['user']['id_company']
-	// 	];
-		
-	// 	if(isset($q) && $q)
-	// 		foreach ($q as $key => $value)
-	// 		{
-	// 			# code...
-	// 			$condition .= ' AND '.$value->key .' '.$value->op.' :key'.$key.':';
-	// 			$bind['key'.$key] = $value->op == 'LIKE' ? '%'.$value->value.'%' : $value->value;
-	// 		}
-	// 		return json_encode(['bind' => $bind, 'condition' => $condition]);
-	// 	$data = $this->dbManager->find(
-	// 		[
-	// 		'conditions' => $condition
-	// 		, 'bind' => $bind
-	// 		])->toArray();
-	
-	// return $this->returnObject($data, 'ITS OK', 'All users list that have been requested');
-	// }
-
 	public static function returnObject($data = [], $status = null, $message = null)
 	{
 		return json_encode(['message' => $message
@@ -53,22 +23,45 @@ class OrdersController extends BaseController
 	public function post()
 	{
 		$registry = $this->di->getRegistry();
-	
+
 		$data = $this->requestBody;
 		$order = new Orders();
 		$order->setDescription($data['Orders']['description']);
 		$order->setIdUser($registry['user']['id_user']);
 		$order->setClientName($data['Orders']['client_name']);
-	
-		$response = $order->create();
-	
+		$response = $order->save();
+
 		$messages = true;
+
 		if($response == false)
 		{
 			$messages = $order->getMessages();
 		}
 
 		return json_encode(['response' => $order->toArray(), 'message' => $messages]);
+	}
+
+	public function verifyOrder($status_password)
+	{
+		// return json_encode($status_password);
+		$order_search = new Orders();
+		$order = $order_search::findFirst(
+			[
+				'conditions' => 'status_password = :sts:'
+				, 'bind' => [
+					'sts' => $status_password
+				]
+			]);
+
+		if($order !== false)
+		{
+			$order = $order->toArray();	
+			return $this->returnObject($order, 'ITS OK', 'One user information given');
+		}
+		else
+		{
+			return $this->returnObject(null, 'ITS OK', 'Resource could not be found');
+		}
 	}
 
 	public function put($id)
@@ -85,8 +78,20 @@ class OrdersController extends BaseController
 		$order->setDescription($data['Orders']['description']);
 		// $order->setIdUser($registry['user']['id_user']);
 		$order->setClientName($data['Orders']['client_name']);
+
+		if(isset($data['Orders']['status']))
+		{
+			$order->setStatus($data['Orders']['status']);
+		}
+
+		if(isset($data['Orders']['status_password']))
+		{
+			$order->setStatusPassword($data['Orders']['status_password']);
+		}
+
+
 		$response = $order->update();
-	
+
 		$messages = true;
 		if($response == false)
 		{

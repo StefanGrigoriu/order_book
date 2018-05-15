@@ -1,6 +1,6 @@
 <?php
 namespace OrderBook\Models;
-
+use MyBehavior;
 use Phalcon\Mvc\Model;
 
 class Company extends BaseModel

@@ -35,14 +35,19 @@
         {
           if(data)
           {
-            if(data.status == 200)
+            console.dir(data);
+            if(data.status && data.status  == 200)
             {
               authService.temp.isLoggedIn = true;
+              authService.temp.user = data.data;
+              sessionStorage.setItem('user',JSON.stringify(data.data));
               $location.path('/dashboard');
             }
             else
             {
               alert('User not found');
+              sessionStorage.setItem('user', '');
+              sessionStorage.setItem('authorization', '');
             }
           }
           //success
@@ -50,8 +55,9 @@
         }
         , function(data)
         {
-          //error
-          console.dir(data)
+          alert('User not found');
+          sessionStorage.setItem('user', '');
+          sessionStorage.setItem('authorization', '');
         })
 
       console.dir($http.defaults.headers.common['Authorization']);

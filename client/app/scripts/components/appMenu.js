@@ -22,8 +22,7 @@ angular.module('orderBookApp').directive('appMenu', function ()
   
 			$scope.auth.isLoggedIn = false;
 				authService.temp.isLoggedIn = false;
-							console.dir(authService);
-										console.dir($scope.auth);
+						
                     sessionStorage.clear();
 			$location.path('/login');
   		};

@@ -49,6 +49,21 @@ var app = angular
         , controller: 'DashboardCtrl'
         //dashboard.js
       })
+       .when('/order-status', {
+        templateUrl: 'views/pages/order_status.html'
+        , controller: 'OrderStatusCtrl'
+        //dashboard.js
+      })
+       .when('/profile', {
+        templateUrl: 'views/pages/profile.html'
+        , controller: 'ProfileCtrl'
+        //dashboard.js
+      })
+       .when('/audit', {
+        templateUrl: 'views/pages/audit.html'
+        , controller: 'AuditCtrl'
+        //dashboard.js
+      })
       .otherwise({
         redirectTo: '/login'
       });
@@ -58,13 +73,17 @@ var app = angular
 
   app.run(['$rootScope', '$location', 'authService', function($rootScope, $location, authService)
   { 
-     var publicPages = ['/home', '/about', '/contact', 'login', '/dashboard'];
+     var publicPages = ['/home', '/about', '/contact', 'login', '/dashboard', '/order-status'];
           $rootScope.$on('$locationChangeStart', function(event)
           {
             // if(  $http.defaults.headers.common['Authorization'] = sessionStorage.getItem('authorization');)
               if(sessionStorage.getItem('authorization'))
               {
                authService.temp.isLoggedIn = true; 
+               if(sessionStorage.getItem('user'))
+               {
+                authService.temp.user = JSON.parse(sessionStorage.getItem('user'));
+               }
               }
               else if(!authService.temp.isLoggedIn)
               {

@@ -1,0 +1,40 @@
+<table class="table table-bordered table-hover">
+	<thead>
+		 <th>User Email</th>
+		<th>TABLE</th>
+		<th>ACTION</th>
+		<th>DATE</th>
+		<th>NEW VALUE</th>
+		<th>OLD VALUE</th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="ob in temp.objectList">
+			<td>{{ob.email}} </td>
+			<td>{{ob.table}}</td>
+			<td>{{ob.action}}</td>
+			<td>{{ob.create_at}}</td>
+			<td>
+				<uib-accordion close-others="true">
+					<uib-accordion-group>
+						<uib-accordion-heading>
+							Expand new details
+						</uib-accordion-heading>
+						<pre ng-bind-html="jsonHighlight(ob.new_value);"></pre>
+					</uib-accordion-group>
+				</uib-accordion>
+				
+			</td>
+			<td>
+				<uib-accordion close-others="true">
+					<uib-accordion-group>
+						<uib-accordion-heading>
+							Expand old details
+						</uib-accordion-heading>
+						<pre ng-bind-html="jsonHighlight(ob.old_value);"></pre>
+					</uib-accordion-group>
+				</uib-accordion>
+				
+			</td>
+		</tr>
+	</tbody>
+</table>

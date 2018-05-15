@@ -1,5 +1,5 @@
 <div class="col-md-12">
-	<div class="row">
+	<div class="row" ng-if="auth.user.id_user_type == '1'">
 		<!-- <div class="btn-group"> -->
 			<div class="col-md-6">
 				<button class="btn btn-primary btn-block" ng-click="temp.selected = false">
@@ -21,7 +21,7 @@
 					<div class="panel-body">
 
 						<div class="form form-horizontal">
-							<div class="form-group" ng-class="User.company.$invalid ? 'has-error' : ''">
+							<div ng-if="auth.user.id_user_type == '1'" class="form-group" ng-class="User.company.$invalid ? 'has-error' : ''">
 								<label class="control-label col-md-2">
 									Company {{ temp.user.id_company}}:
 								</label>
@@ -35,7 +35,7 @@
 										name="company" 
 										class="form-control" 
 										placeholder="type a name" 
-										
+										autocomplete="off" 
 										required>	
 								</div>
 
@@ -56,7 +56,17 @@
 									<input ng-model="temp.user.email" type="email" name="email" class="form-control" placeholder="eg. : stefan@gmail.com" required>	
 								</div>
 							</div>
-
+							<div class="form-group" ng-class="User.name.$invalid ? 'has-error' : ''">
+								<label class="control-label col-md-2">
+									Type:
+								</label>
+								<div class="col-md-10">
+									<select ng-disabled="auth.user.id_user_type != '1'" ng-model="temp.user.id_user_type" type="text" name="user_type" class="form-control" placeholder="eg. : Stefan" required>
+										<option value="2">Owner</option>
+										<option value="3">Employee</option>
+									</select>	
+								</div>
+							</div>
 							<div class="form-group" ng-class="User.password.$invalid ? 'has-error' : ''">
 								<label class="control-label col-md-2">
 									Password:
@@ -89,7 +99,7 @@
 			</div>
 		</div>
 
-		<div class="row" style="margin-top:10px" ng-if="!temp.selected" ng-form="Company">
+		<div class="row" style="margin-top:10px" ng-if="!temp.selected && auth.user.id_user_type == '1'" ng-form="Company">
 			<div class="col-md-12">
 				<div class="panel panel-default">
 					<div class="panel-body">

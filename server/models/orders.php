@@ -16,6 +16,10 @@ class Orders extends BaseModel
 
 	public $description;
 
+	public $status;
+
+	public $status_password;
+
 	public $created_at;
 	
 	public $updated_at;
@@ -69,6 +73,26 @@ class Orders extends BaseModel
 	public function getDescription()
 	{
 		return $this->description;
+	}
+
+	public function setStatus($status)
+	{
+		$this->status = $status;
+	}
+
+	public function getStatus()
+	{
+		return $this->status;
+	}
+
+	public function setStatusPassword($status_password)
+	{
+		$this->status_password = $status_password;
+	}
+
+	public function getStatusPassword()
+	{
+		return $this->status_password;
 	}
 
 	public function setCreatedAt($created_at)

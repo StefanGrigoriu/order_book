@@ -5,17 +5,21 @@ use Phalcon\Mvc\Model;
 
 class Users extends BaseModel
 {
-	public $id_user;
+	private $id_user;
 
-	public $id_company;
+	private $id_company;
 
-	public $id_user_type;
+	private $id_user_type;
 
-	public $name;
+	private $name;
 
-	public $email;
+	private $email;
+
+	private $mobile_no;
+
+	private $address;
 	
-	public $password;
+	private $password;
 
 	public function setIdUser($id_user)
 	{
@@ -74,6 +78,26 @@ class Users extends BaseModel
 	public function getPassword()
 	{
 		return $this->password;
+	}
+
+	public function setMobileNo($mobile_no)
+	{
+		$this->mobile_no = $mobile_no;
+	}
+
+	public function getMobileNo()
+	{
+		return $this->mobile_no;
+	}
+
+	public function setAddress($address)
+	{
+		$this->address = $address;
+	}
+
+	public function getAddress()
+	{
+		return $this->address;
 	}
 
 }

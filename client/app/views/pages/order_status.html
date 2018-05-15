@@ -1,0 +1,23 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h2 class="panel-title">View status of the order:</h2>
+	</div>
+	<div class="panel-body">
+
+		<div class="col-md-12">
+			<div class="input-group">
+				<input type="text" name="status_password" class="form-control" ng-model="temp.status_password" placeholder="type the password">
+				<div class="input-group-addon" ng-click="findOrder();">
+					<i class="fa fa-search"></i>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12" ng-if="temp.status">
+			<h3 class="well">{{temp.status}}</h3>
+		</div>
+
+	</div>
+
+
+</div>
+

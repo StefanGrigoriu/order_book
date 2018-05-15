@@ -22,7 +22,8 @@ $collections = [];
     $collection = new \Phalcon\Mvc\Micro\Collection();
     $collection->setPrefix('/orders')->setHandler('OrderBook\Controllers\OrdersController')->setLazy(true);
     $collection->get('/', 'get');
-    $collection->get('/{id:[0-9]+}', 'getOne');
+    $collection->get('/verify/{id}', 'verifyOrder');
+    $collection->get('/{id}', 'getOne');
     $collection->post('/', 'post');
     $collection->put('/{id:[0-9]+}', 'put');
     $collection->delete('/{id:[0-9]+}', 'delete');
@@ -52,6 +53,11 @@ $collections = [];
     $collection = new \Phalcon\Mvc\Micro\Collection();
     $collection->setPrefix('/security')->setHandler('OrderBook\Controllers\LoginController')->setLazy(true);
     $collection->post('/login', 'login');
+    $collections[] = $collection;
+//audit
+  $collection = new \Phalcon\Mvc\Micro\Collection();
+    $collection->setPrefix('/audit')->setHandler('OrderBook\Controllers\AuditController')->setLazy(true);
+    $collection->get('/', 'get');
     $collections[] = $collection;
 
     foreach($collections as $collection)

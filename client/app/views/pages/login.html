@@ -1,14 +1,14 @@
-<div class="loginmodal-container">
+<div class="col-md-6 col-md-offset-3">
+	<div class="loginmodal-container">
 	<h1 style="text-align: center">Login to Your Account</h1><br>
 	<form name="loginForm" class="form form-horizontal">
 		<!-- novalidate="true" -->
-		<input type="text" name="company" placeholder="Company"  ng-model="temp.company_id" class="form-control" required>
-		<input type="text" name="user" placeholder="Username"  ng-model="temp.username" class="form-control" required>
+		<input type="text" name="company" placeholder="Company"  ng-model="temp.company_id" class="form-control" required autocomplete="off">
+		<input type="text" name="user" placeholder="Email"  ng-model="temp.username" class="form-control" required>
 		<input type="password" name="pass" placeholder="Password" ng-model="temp.password" class="form-control" required>
 		<input ng-disabled="loginForm.$invalid" type="submit" name="login" class="btn btn-success btn-block" value="Login" ng-click="login();">
 	</form>
 
-	<div class="login-help">
-		<a href="#">Register</a> - <a href="#">Forgot Password</a>
-	</div>
+
+</div>
 </div>

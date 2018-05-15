@@ -82,16 +82,25 @@ $di->setShared('requestBody', function()
 // Create and bind the DI to the application
 $app = new Micro($di);
 
-
-
+// include __DIR__. '/routes/routes.php';
+include __DIR__. '/routes/routes.php';
 $app->before(function() use ($app, $di)
 {
-    $security = $di->getSecurity();
-    $role = $security->checkAccess(['email' => $app->request->getServer('PHP_AUTH_USER'), 'password' => $app->request->getServer('PHP_AUTH_PW')]);
-    return $role;
+    // var_dump($app->getRouter()->getMatchedRoute()->getPattern());
+    // exit();
+    if($app->getRouter()->getMatchedRoute()->getPattern() == '/orders/verify/{id}')
+    {
+        // return true;
+    }
+    else
+    {
+        $security = $di->getSecurity();
+        $role = $security->checkAccess(['email' => $app->request->getServer('PHP_AUTH_USER'), 'password' => $app->request->getServer('PHP_AUTH_PW')]);
+        return $role;
+    }
 });
 
-include __DIR__. '/routes/routes.php';
+
 
 $app->notFound(function() use ($app)
 {

@@ -20,10 +20,16 @@
 	<div class="modal-body">
 		<div class="form form-horizontal">
 			<div class="form-group">
-					<label>Description: </label><input type="text" name="description" ng-model="ceva.description" class="form-control">
+					<label>Description: </label><textarea type="text" name="description" ng-model="ceva.description" class="form-control" rows="4"></textarea>
 			</div>
 			<div class="form-group">
-					<label>Client: </label><input type="text" name="description" ng-model="ceva.client_name" class="form-control">
+					<label>Client: </label><input type="text" name="client_name" ng-model="ceva.client_name" class="form-control">
+			</div>
+			<div ng-if="!ceva.is_new" class="form-group">
+					<label>Status: </label><input type="text" name="status" ng-model="ceva.status" class="form-control">
+			</div>
+			<div ng-if="!ceva.is_new" class="form-group">
+					<label>Status password: </label><input type="text" name="status_password" ng-model="ceva.status_password" class="form-control">
 			</div>
 		</div>
 		

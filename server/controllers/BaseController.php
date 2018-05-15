@@ -3,7 +3,7 @@ namespace OrderBook\Controllers;
 
 class BaseController extends \Phalcon\DI\Injectable
 {
-		public $dbManager = null;
+	public $dbManager = null;
 
 	public function __construct(){
 		$di = \Phalcon\DI::getDefault();
@@ -18,11 +18,13 @@ class BaseController extends \Phalcon\DI\Injectable
 		if($q)
 			$q = json_decode($q);
 
-		$condition = 'id_company = :id_company:';
-		// return json_encode($condition);
-		$bind = [
-			'id_company' => $registry['user']['id_company']
-		];
+		if($registry['user']['id_user_type'] != '1')
+		{
+			$condition = 'id_company = :id_company:';
+			$bind = [
+				'id_company' => $registry['user']['id_company']
+			];
+		}
 		
 		if(isset($q) && $q)
 			foreach ($q as $key => $value)
@@ -32,53 +34,54 @@ class BaseController extends \Phalcon\DI\Injectable
 				$bind['key'.$key] = $value->op == 'LIKE' ? '%'.$value->value.'%' : $value->value;
 			}
 			// return json_encode(['bind' => $bind, 'condition' => $condition]);
-		$data = $this->dbManager->find(
-			[
-			'conditions' => $condition
-			, 'bind' => $bind
-			])->toArray();
-	
-	return $this->returnObject($data, 'ITS OK', 'All users list that have been requested');
-		
-	}
-
-	public function getOne($id)
-	{
-		$data = $this->dbManager->findFirst($id);
-		if($data !== false)
-		{
-			$data = $data->toArray();	
-			return $this->returnObject($data, 'ITS OK', 'One user information given');
+			$data = $this->dbManager->find(
+				[
+					'conditions' => isset($condition) ? $condition : null
+					, 'bind' => isset($bind) ? $bind : null
+					, 'order' => 'created_at DESC'
+				])->toArray();
+			
+			return $this->returnObject($data, 'ITS OK', 'All users list that have been requested');
+			
 		}
-		else
-		{
-			return $this->returnObject(null, 'ITS OK', 'Resource could not be found');
-		}
-		// return 'getone' . $id_user;
-	}
 
-		public function delete($id)
-	{
-		$data = $this->dbManager->findFirst($id);	
-		if($data !== false)
+		public function getOne($id)
 		{
-			if($data->delete() !== false)
+			$data = $this->dbManager->findFirst($id);
+			if($data !== false)
 			{
-				//entry was deleted from database 
-				return $this->returnObject(null, 'ITS OK', 'The entry was deleted.');
+				$data = $data->toArray();	
+				return $this->returnObject($data, 'ITS OK', 'One user information given');
 			}
 			else
 			{
-						// entry couldnt be deleted
-				return $this->returnObject(null, 'ITS OK', 'The entry could not be deleted.');
+				return $this->returnObject(null, 'ITS OK', 'Resource could not be found');
 			}
-		}
-		else
-		{
-			//entry (row) was not found in database
-			return $this->returnObject(null, 'ITS OK', 'The entry (the given id) was not found in database.');
+		// return 'getone' . $id_user;
 		}
 
-		return true;
+		public function delete($id)
+		{
+			$data = $this->dbManager->findFirst($id);	
+			if($data !== false)
+			{
+				if($data->delete() !== false)
+				{
+				//entry was deleted from database 
+					return $this->returnObject(null, 'ITS OK', 'The entry was deleted.');
+				}
+				else
+				{
+						// entry couldnt be deleted
+					return $this->returnObject(null, 'ITS OK', 'The entry could not be deleted.');
+				}
+			}
+			else
+			{
+			//entry (row) was not found in database
+				return $this->returnObject(null, 'ITS OK', 'The entry (the given id) was not found in database.');
+			}
+
+			return true;
+		}
 	}
-}
