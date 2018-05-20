@@ -61,9 +61,6 @@ class CompanyController extends BaseController
 	public function post()
 	{
 		$data = $this->requestBody;
-		// var_dump($data);
-		// return json_encode($data);
-
 		$company = new Company();
 		$resources = $company->findFirst([
 			'name = :name:',
@@ -71,37 +68,40 @@ class CompanyController extends BaseController
 				'name' =>	$data['name']
 			]
 		]);
-		// return json_encode($resources);
 
-// var_dump($resources);
-		// if($resources !== false)
-		// 	return $this->returnObject(null, 'ITS not ok', 'There is already a company with that name.');
 		$company->setName($data['name']);
 		$resource = $company->save();
 		if($resource !== false)
 		{
 			return $this->returnObject(null, 'ITS OK', 'Company has been created');
 		}
-		
-		// if(isset($data) && isset($data['name'])
-		// {
-		// 	$Company->setName($data['name']);
 
-		// 	if(isset($data['config']) && $data['config'])
-		// 		$company->setConfig($data['config']);
-
-		// 	$resource = $company->save();
-			// if($resource !== false)
-			// {
-			// 	return $this->returnObject(null, 'ITS OK', 'Company has been created');
-			// }
-		// }
 		return $this->returnObject(null, 'ITS OK', 'Company has not been created, data is missing');
 	}
 
-	public function put()
+	public function put($id)
 	{
-		return 'put';
+		$data = $this->requestBody;
+		$company = new Company();
+		$resources = $company->findFirst([
+			'id_company = :id:',
+			'bind' => [
+				'id' =>$id
+			]
+		]);
+	
+		if(isset($data['name']))
+			$resources->setName($data['name']);
+		if(isset($data['config']))
+			$resources->setConfig($data['config']);
+		$resource = $resources->save();
+
+		if($resource !== false)
+		{
+			return $this->returnObject($resources->toArray(), 'ITS OK', 'Company has been updated');
+		}
+
+		return $this->returnObject(null, 'ITS OK', 'Company has not been created, data is missing');
 	}
 
 	// public function delete()

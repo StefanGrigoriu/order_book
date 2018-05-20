@@ -52,17 +52,24 @@ var app = angular
        .when('/order-status', {
         templateUrl: 'views/pages/order_status.html'
         , controller: 'OrderStatusCtrl'
-        //dashboard.js
+
       })
        .when('/profile', {
         templateUrl: 'views/pages/profile.html'
         , controller: 'ProfileCtrl'
-        //dashboard.js
+
       })
        .when('/audit', {
         templateUrl: 'views/pages/audit.html'
         , controller: 'AuditCtrl'
-        //dashboard.js
+      })
+              .when('/company-settings', {
+        templateUrl: 'views/pages/company_settings.html'
+        , controller: 'CompanySettingsCtrl'
+      })
+                  .when('/add-user', {
+        templateUrl: 'views/pages/add_user.html'
+        , controller: 'AddUserCtrl'
       })
       .otherwise({
         redirectTo: '/login'

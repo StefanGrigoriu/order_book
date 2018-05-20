@@ -27,12 +27,23 @@
               <li><a ng-href="#/login" ng-if="!auth.isLoggedIn" ng-class="location.$$url == '/login' ? 'active' : ''">Login</a></li>
               <li><a ng-click="logout();" ng-if="auth.isLoggedIn">Logout</a></li>
               </ul>
-                      <span ng-if="auth.isLoggedIn" style="    margin-top: 10px;
-    display: block;
-    padding-left: 7px;
-    float: right;
-    border-left: 1px #ccc solid;
-}"><a href="#/profile" ng-class="location.$$url == '/profile' ? 'active' : ''"><i class="fa fa-user" style="font-size:24px"></i> </a></li>
+              <span style="float:right; font-size:24px; padding-left:7px; margin-top:10px">
+                 <span class="dropdown">
+                    <i class="fa fa-cog" data-toggle="dropdown"></i>
+                        <ul class="dropdown-menu" style="    margin-top: 12px;
+    background: #f8f8f8;
+    border-top: none;
+    border-radius: 0;
+    left: -130px;">
+                          <li><a href="#/company-settings">Company settings</a></li>
+                          <li><a href="#/add-user">Add user</a></li>
+                        </ul>
+                 </span>
+                      <span ng-if="auth.isLoggedIn" style="border-left: 1px #ccc solid; padding-left:7px">
+                          <a href="#/profile" ng-class="location.$$url == '/profile' ? 'active' : ''"><i class="fa fa-user" style="font-size:24px"></i> </a>
+                        </span>
+              </span>
+
 
           </div>
         </div>

@@ -1,0 +1,41 @@
+
+<div class="panel panel-default">
+	<div class="panel-heading" style="    border-right: 1px solid #ccc;
+	border-left: 1px solid #ccc;">
+	<h3 class="panel-title">Company settings</h3>
+</div>
+<div class="panel-body">
+	<div class="form form-horizontal">
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="email">Address:</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="address" placeholder="Enter address" ng-model="temp.companyObject.address_name"
+ ng-model="ceva.destination_address" 
+				 	 uib-typeahead="address as (address.description) for address in getAddress($viewValue)"
+				 	 typeahead-on-select="changeDestination($item)"
+				>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="email">Email:</label>
+			<div class="col-sm-10">
+				<input type="email" class="form-control" id="email" placeholder="Enter email" ng-model="temp.companyObject.email"/>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label class="control-label col-sm-2" for="email">Mobile no:</label>
+			<div class="col-sm-10">
+				<input type="text" class="form-control" id="mobile_no" placeholder="Enter mobile number" ng-model="temp.companyObject.mobile_no"/>
+			</div>
+		</div>
+ <div class="form-group"> 
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-success" ng-click="save()">Save changes</button>
+    </div>
+  </div>
+
+	</div>
+</div>
+</div>

@@ -2,40 +2,74 @@
 	<div class="modal-header">
 		<div class="modal-title">
 			<h3>
-			 <span ng-if="!ceva.is_new">
-				Editing order with id : {{ceva.id_order}}	
-			</span>
-			<span ng-if="ceva.is_new">
-				Add new order
-			</span>
-<div class="btn-group pull-right" ng-click="$dismiss();">
-				<div class=" btn-danger btn">
-					<i class="fa fa-remove"></i>
+				<span ng-if="!ceva.is_new">
+					Editing order with id : {{ceva.id_order}}	
+				</span>
+				<span ng-if="ceva.is_new">
+					Add new order
+				</span>
+				<div class="btn-group pull-right" ng-click="$dismiss();">
+					<div class=" btn-danger btn">
+						<i class="fa fa-remove"></i>
+					</div>
 				</div>
-			</div>
 			</h3>
 			
 		</div>	
 	</div>
-	<div class="modal-body">
-		<div class="form form-horizontal">
-			<div class="form-group">
+	<div class="modal-body" style="overflow:hidden;">
+		<div class="col-md-6">
+			<div class="form form-horizontal">
+				<div class="form-group">
 					<label>Description: </label><textarea type="text" name="description" ng-model="ceva.description" class="form-control" rows="4"></textarea>
-			</div>
-			<div class="form-group">
+				</div>
+
+				<div class="form-group">
+					<label>Destination address: </label><input
+					type="text" 
+					name="address" 
+					ng-model="ceva.destination_address" 
+					uib-typeahead="address as (address.description) for address in getAddress($viewValue)"
+					typeahead-on-select="changeDestination($item)"
+					class="form-control"/>
+				</div>
+
+				<div class="form-group">
 					<label>Client: </label><input type="text" name="client_name" ng-model="ceva.client_name" class="form-control">
-			</div>
-			<div ng-if="!ceva.is_new" class="form-group">
+				</div>
+				<div ng-if="!ceva.is_new" class="form-group">
 					<label>Status: </label><input type="text" name="status" ng-model="ceva.status" class="form-control">
-			</div>
-			<div ng-if="!ceva.is_new" class="form-group">
+				</div>
+				<div ng-if="!ceva.is_new" class="form-group">
 					<label>Status password: </label><input type="text" name="status_password" ng-model="ceva.status_password" class="form-control">
+				</div>
 			</div>
 		</div>
-		
+		<div class="col-md-6">
+			<div class="form form-horizontal">
+				<div class="form-group">
+					<div id="map" style="        width: 100%;
+					margin-left: 10px;
+					margin-top: 23px;
+					display: block;
+					height: 100%;
+					min-height: 200px;
+					background: rgb(204, 204, 204);
+					position: relative;
+					overflow: hidden;">
 
+				</div>
+			</div>
+		</div>
+		<div class="form-group" style="margin-left:10px">
+			<span><strong>Distance:</strong>	{{routeInfo.distance}} </br></span>
+			<span>	<strong>Duration:</strong>	{{routeInfo.duration}}</span>
+		</div>
 	</div>
-	<div class="modal-footer">
-		<button class="btn btn-success btn-block" ng-click="$close(ceva);">SAVE</button>
-	</div>
+
+
+</div>
+<div class="modal-footer">
+	<button class="btn btn-success btn-block" ng-click="$close(ceva);">SAVE</button>
+</div>
 </div>

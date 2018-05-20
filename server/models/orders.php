@@ -16,6 +16,12 @@ class Orders extends BaseModel
 
 	public $description;
 
+	public $destination_address;
+
+	public $destination_lat;
+
+	public $destination_lng;
+
 	public $status;
 
 	public $status_password;
@@ -74,6 +80,40 @@ class Orders extends BaseModel
 	{
 		return $this->description;
 	}
+// 
+	public function setDestinationAddress($destination_address)
+	{
+		$this->destination_address = $destination_address;
+	}
+
+	public function getDestinationAddress()
+	{
+		return $this->destination_address;
+	}
+
+
+	public function setDestinationLat($destination_lat)
+	{
+		$this->destination_lat = $destination_lat;
+	}
+
+	public function getDestinationLat()
+	{
+		return $this->destination_lat;
+	}
+
+	public function setDestinationLng($destination_lng)
+	{
+		$this->destination_lng = $destination_lng;
+	}
+
+	public function getDestinationLng()
+	{
+		return $this->destination_lng;
+	}
+//	 
+
+
 
 	public function setStatus($status)
 	{

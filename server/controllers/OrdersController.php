@@ -29,6 +29,15 @@ class OrdersController extends BaseController
 		$order->setDescription($data['Orders']['description']);
 		$order->setIdUser($registry['user']['id_user']);
 		$order->setClientName($data['Orders']['client_name']);
+		if(isset($data['Orders']['destination_address']))
+		{
+
+			$order->setDestinationAddress($data['Orders']['destination_address']);
+						$order->setDestinationLat($data['Orders']['destination_lat']);
+
+			$order->setDestinationLng($data['Orders']['destination_lng']);
+
+		}
 		$response = $order->save();
 
 		$messages = true;
@@ -89,7 +98,15 @@ class OrdersController extends BaseController
 			$order->setStatusPassword($data['Orders']['status_password']);
 		}
 
+if(isset($data['Orders']['destination_address']))
+		{
 
+			$order->setDestinationAddress($data['Orders']['destination_address']);
+						$order->setDestinationLat($data['Orders']['destination_lat']);
+
+			$order->setDestinationLng($data['Orders']['destination_lng']);
+
+		}
 		$response = $order->update();
 
 		$messages = true;

@@ -84,7 +84,7 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
 
    $scope.addNew = function()
    {
-      var dlg = dialogs.create('./views/partials/manage_order.html','ManageOrderCtrl', null,{},'ctrl');
+      var dlg = dialogs.create('./views/partials/manage_order.html','ManageOrderCtrl', null,{size:'lg'},'ctrl');
       dlg.result.then(function(data)
       {
          Request.post('orders' 
@@ -92,6 +92,9 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
                'Orders': {
                   'description' : data.description
                   , 'client_name': data.client_name
+                  , 'destination_address': data.destination_address
+                  , 'destination_lng': data.destination_lng
+                  , 'destination_lat': data.destination_lat
                }
             }
             , function(resp)
@@ -121,8 +124,15 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
 
    $scope.editOrder = function(order, key)
    {
+      // opts = {
+     // 'keyboard': true or false
+     // 'backdrop': 'static' or true or false
+     // 'size': 'sm' or 'lg' //small or large modal size
+     // 'windowClass': 'dialogs-default' // additional CSS class(es) to be added to a modal window
+     // 'copy': true or false // used only with create custom dialog
+ // }
    	// dialogs.notify(order.id_order, order.description);
-	 var dlg = dialogs.create('./views/partials/manage_order.html','ManageOrderCtrl', order,{},'ctrl');
+	 var dlg = dialogs.create('./views/partials/manage_order.html','ManageOrderCtrl', order,{keyboard:false, size:"xlg"});
      dlg.result.then(function(data)
       {
           Request.put('orders/'+ order.id_order 
@@ -132,6 +142,9 @@ angular.module('orderBookApp').controller('DashboardCtrl', function ($scope, aut
                   , 'client_name': data.client_name
                   , status: data.status
                   , status_password: data.status_password
+                   , 'destination_address': data.destination_address
+                  , 'destination_lng': data.destination_lng
+                  , 'destination_lat': data.destination_lat
                }
             }
             , function(resp)
