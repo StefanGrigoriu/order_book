@@ -52,24 +52,6 @@ angular.module('orderBookApp')
    {
 
          var url = 'audit';
-         // var q = false;
-         // var queryString = [];
-         // angular.forEach($scope.temp.filters, function(key, value)
-         // {
-         //    if($scope.temp.filters[value])
-         //    {
-         //       queryString.push({
-         //          value: value == 'date_to' ? moment(moment($scope.temp.filters[value]).endOf('day')).format('YYYY-MM-DD HH:mm:ss') : 
-         //          value == 'date_from' ? moment(moment($scope.temp.filters[value]).startOf('day')).format('YYYY-MM-DD HH:mm:ss') : $scope.temp.filters[value] 
-         //          , key: value == 'date_to' || value == 'date_from' ? 'created_at' : value
-         //          , op: value == 'client_name' || value == 'description' ? 'LIKE' : value == 'date_to' ? '<=' : value == 'date_from' ? '>=' : '='
-         //       });
-
-         //       if(!q) q = true;
-         //    }
-         // });    
-         // if(q) 
-         //    url += '?q=' + JSON.stringify(queryString);
 
          Request.get(url
             , function(data)

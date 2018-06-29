@@ -46,6 +46,7 @@ class Security extends Component
 		if(isset($user_found) && $user_found)
 		{
 			$registry['user'] = $user_found->toArray();
+			$registry['company'] = $search_company->toArray();
 		}
 		else throw new HTTPException('Error user not found', 400);
 	}

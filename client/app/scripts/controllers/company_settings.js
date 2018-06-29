@@ -21,9 +21,7 @@
 
   $scope.save = function()
   {
-    console.dir($scope.temp.companyObject);
-    debugger;
-    var url = 'company/' + authService.temp.user.id_company;
+    var url = 'company/' + authService.getTemp().user.id_company;
     var data = {
         config: JSON.stringify({
           headquarter: $scope.temp.companyObject
@@ -50,12 +48,12 @@
       console.dir(data);
     });
   
-}
+} 
 
 $scope.load = function()
 {
 
- var url = 'company/' + authService.temp.user.id_company;;
+ var url = 'company/' + authService.getTemp().user.id_company;;
 
  Request.get(url
   , function(data)
@@ -121,29 +119,10 @@ $scope.changeDestination = function(location)
   geocoder.geocode({'placeId': location.place_id}
     , function(result, status)
     {
-        // if(markers[0])
-        // {
-        //   markers[0].setMap(null);
-        //   markers = [];
-        // }
 
         $scope.temp.companyObject.address_lat = result[0].geometry.location.lat();
         $scope.temp.companyObject.address_lng = result[0].geometry.location.lng();
-        console.dir($scope.temp);
-        // console.dir(result[0].geometry.location.lat());
-        // console.dir(result[0].geometry.location.lng());
-        // $scope.ceva.destination_lat = result[0].geometry.location.lat();
-        // $scope.ceva.destination_lng = result[0].geometry.location.lng();
-        // var objecMarkertCoordinates = new google.maps.LatLng(result[0].geometry.location.lat(), result[0].geometry.location.lng());
-        // var marker = new google.maps.Marker({
-        //   position: objecMarkertCoordinates
-        //   , draggable: false
-        //   , map: map
-        //   , title: 'Destination'
-        // });
-        // map.panTo(objecMarkertCoordinates);
-        // markers.push(marker);
-        console.dir(result);
+
       });
 
 };

@@ -74,11 +74,27 @@ angular.module('orderBookApp').factory('Request', function ($http, config)
 			});
 	};
 
+	var putForm = function(uri, data, success, error)
+	{
+		 var options =  {
+            transformRequest: angular.identity,
+            headers: {'Content-Type': undefined}
+        };
+ 
+            options.headers.Authorization = sessionStorage.getItem('authorization');
+
+        $http.put(uri, data, options)
+            .then(success
+                , error);
+	}
+
 
 	return {
 		get: get
 		, post: post
 		, put: put
 		, delete: doDelete
+
+		,putForm: putForm
 	}
 });

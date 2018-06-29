@@ -10,7 +10,7 @@
  angular.module('orderBookApp')
  .controller('AdminCtrl', function ($scope, Request, $q, authService) 
  {
-	$scope.auth = authService.temp;
+	$scope.auth = authService.getTemp();
 	
  	$scope.temp = {
  		user:{
@@ -28,11 +28,12 @@
  		, selected: false
  	};
 
- 	if(authService.temp.user.id_user_type == '2')
+ 	if(authService.getTemp().user.id_user_type == '2')
  	{
- 		$scope.temp.user.id_company = authService.temp.user.id_company;
+ 		$scope.temp.user.id_company = authService.getTemp().user.id_company;
  		$scope.temp.selected = true;
  	}
+ 	
  	$scope.createCompany = function()
  	{
  		Request.post('company' 
@@ -59,9 +60,9 @@
 	            		, selected: false
 	            	};
 
-	            		if(authService.temp.user.id_user_type == '2')
+	            		if(authService.getTemp().user.id_user_type == '2')
  	{
- 		$scope.temp.user.id_company = authService.temp.user.id_company;
+ 		$scope.temp.user.id_company = authService.getTemp().user.id_company;
  		$scope.temp.selected = true;
  	}
 	            	alert('Company has been added');

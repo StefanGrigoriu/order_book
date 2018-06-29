@@ -15,13 +15,13 @@ angular.module('orderBookApp').directive('appMenu', function ()
   	, controller: function(authService, $scope, $location)
   	{
   		$scope.location = $location;
-  		$scope.auth = authService.temp;
+  		$scope.auth = authService.getTemp();
   		
   		$scope.logout = function()
   		{
   
 			$scope.auth.isLoggedIn = false;
-				authService.temp.isLoggedIn = false;
+				authService.getTemp().isLoggedIn = false;
 						
                     sessionStorage.clear();
 			$location.path('/login');

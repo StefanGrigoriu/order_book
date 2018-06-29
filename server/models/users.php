@@ -21,6 +21,8 @@ class Users extends BaseModel
 	
 	private $password;
 
+	private $picture;
+
 	public function setIdUser($id_user)
 	{
 		$this->id_user = $id_user;
@@ -98,6 +100,16 @@ class Users extends BaseModel
 	public function getAddress()
 	{
 		return $this->address;
+	}
+
+	public function setPicture($picture)
+	{
+		$this->picture = $picture;
+	}
+
+	public function getPicture()
+	{
+		return $this->picture;
 	}
 
 }

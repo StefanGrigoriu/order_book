@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the orderBookApp
  */
- angular.module('orderBookApp').controller('ManageOrderCtrl', function ($scope, data, $q, authService, Request, $timeout) 
+ angular.module('orderBookApp').controller('EditOrderCtrl', function ($scope, data, $q, authService, Request, $timeout) 
  {
  	$scope.companyObject = {};
  	$scope.routeInfo = {
@@ -54,8 +54,8 @@
 
  	$scope.loadConfig = function()
  	{
-
- 		var url = 'company/' + authService.temp.user.id_company;;
+			console.dir(authService.getTemp());
+ 		var url = 'company/' + authService.getTemp().user.id_company;;
 
  		Request.get(url
  			, function(data)
@@ -172,8 +172,10 @@
 
  				$timeout(function()
  				{
- 					$scope.routeInfo.distance = angular.copy(resp.rows[0].elements[0].distance.text);
- 					$scope.routeInfo.duration = angular.copy(resp.rows[0].elements[0].duration.text);
+ 					$scope.ceva.distance_text = angular.copy(resp.rows[0].elements[0].distance.text);
+ 					$scope.ceva.duration_text = angular.copy(resp.rows[0].elements[0].duration.text);
+ 					$scope.ceva.distance = angular.copy(resp.rows[0].elements[0].distance.value);
+ 					$scope.ceva.durations = angular.copy(resp.rows[0].elements[0].duration.value);
  				}, 100);
  				
  			}

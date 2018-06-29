@@ -23,7 +23,6 @@ class AuditController extends BaseController
 
 	public function get()
 	{
-		// return $this->returnObject('Im here');
 		$registry = $this->di->getRegistry();
 		if($registry['user']['id_user_type'] != '1')
 		{

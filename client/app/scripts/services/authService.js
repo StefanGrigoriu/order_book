@@ -6,6 +6,14 @@ angular.module('orderBookApp').factory('authService', function ()
 	};
 
 	return {
-		temp: temp
+		getTemp: function()
+		{
+			return temp;
+		}
+		, updateUser: function(userData)
+		{
+			temp.user = null;
+			temp.user = userData;
+		}
 	}
 });

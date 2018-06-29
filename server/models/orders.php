@@ -14,6 +14,8 @@ class Orders extends BaseModel
 
 	public $client_name;
 
+	public $client_email;
+
 	public $description;
 
 	public $destination_address;
@@ -21,6 +23,14 @@ class Orders extends BaseModel
 	public $destination_lat;
 
 	public $destination_lng;
+
+	public $duration;
+
+	public $distance;
+
+	public $duration_text;
+
+	public $distance_text;
 
 	public $status;
 
@@ -69,6 +79,16 @@ class Orders extends BaseModel
 	public function getClientName()
 	{
 		return $this->client_name;
+	}
+
+	public function setClientEmail($client_email)
+	{
+		$this->client_email = $client_email;
+	}
+
+	public function getClientEmail()
+	{
+		return $this->client_email;
 	}
 
 	public function setDescription($description)
@@ -154,6 +174,51 @@ class Orders extends BaseModel
 	{
 		return $this->updated_at;
 	}
+
+	public function setDuration($duration)
+	{
+		$this->duration = $duration;
+		// return $this;
+	}
+
+	public function getDuration()
+	{
+		return $this->duration;
+	}
+
+	public function setDistance($distance)
+	{
+		$this->distance = $distance;
+		// return $this;
+	}
+
+	public function getDistance()
+	{
+		return $this->distance;
+	}
+
+	public function setDurationText($duration_text)
+	{
+		$this->duration_text = $duration_text;
+		// return $this;
+	}
+
+	public function getDurationText()
+	{
+		return $this->duration_text;
+	}
+
+	public function setDistanceText($distance_text)
+	{
+		$this->distance_text = $distance_text;
+		// return $this;
+	}
+
+	public function getDistanceText()
+	{
+		return $this->distance_text;
+	}
+
 
 	
 }

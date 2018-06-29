@@ -104,8 +104,4 @@ class CompanyController extends BaseController
 		return $this->returnObject(null, 'ITS OK', 'Company has not been created, data is missing');
 	}
 
-	// public function delete()
-	// {
-	// 	return 'delete';
-	// }
 }

@@ -24,6 +24,10 @@ $collections = [];
     $collection->get('/', 'get');
     $collection->get('/verify/{id}', 'verifyOrder');
     $collection->get('/{id}', 'getOne');
+    $collection->get('/statistic', 'getOrderByMonth');
+    $collection->post('/send-email', 'sendEmail');
+
+    
     $collection->post('/', 'post');
     $collection->put('/{id:[0-9]+}', 'put');
     $collection->delete('/{id:[0-9]+}', 'delete');

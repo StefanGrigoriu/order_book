@@ -1,4 +1,4 @@
-
+  
 
       <div class="navbar navbar-default" role="navigation">
         <div class="container">
@@ -22,13 +22,17 @@
   
               <!-- <li><a ng-href="#/about" ng-class="location.$$url == '/about' ? 'active' : ''">About</a></li> -->
               <li><a ng-href="#/admin" ng-class="location.$$url == '/admin' ? 'active' : ''" ng-if=" auth.isLoggedIn && (auth.user.id_user_type == '1' || auth.user.id_user_type == '2' )">Admin</a></li>
+              
               <!-- owner este user_type 2, admin este 1, angajat 3 -->
+
               <li><a ng-href="#/audit" ng-class="location.$$url == '/audit' ? 'active' : ''" ng-if=" auth.isLoggedIn && (auth.user.id_user_type == '1' || auth.user.id_user_type == '2')">Audit</a></li>
+                 <li><a ng-href="#/statistics" ng-class="location.$$url == '/statistics' ? 'active' : ''" ng-if=" auth.isLoggedIn && (auth.user.id_user_type == '1' || auth.user.id_user_type == '2')">Statistics</a></li>
               <li><a ng-href="#/login" ng-if="!auth.isLoggedIn" ng-class="location.$$url == '/login' ? 'active' : ''">Login</a></li>
               <li><a ng-click="logout();" ng-if="auth.isLoggedIn">Logout</a></li>
+                <li><a ng-href="#/api-doc" ng-class="location.$$url == '/api-doc' ? 'active' : ''">Api Doc</a></li>
               </ul>
-              <span style="float:right; font-size:24px; padding-left:7px; margin-top:10px">
-                 <span class="dropdown">
+              <span  style="float:right; font-size:24px; padding-left:7px; margin-top:10px">
+                 <span class="dropdown" ng-if=" auth.isLoggedIn && (auth.user.id_user_type == '1' || auth.user.id_user_type == '2')">
                     <i class="fa fa-cog" data-toggle="dropdown"></i>
                         <ul class="dropdown-menu" style="    margin-top: 12px;
     background: #f8f8f8;
@@ -36,7 +40,7 @@
     border-radius: 0;
     left: -130px;">
                           <li><a href="#/company-settings">Company settings</a></li>
-                          <li><a href="#/add-user">Add user</a></li>
+                          <!-- <li><a href="#/add-user">Add user</a></li> -->
                         </ul>
                  </span>
                       <span ng-if="auth.isLoggedIn" style="border-left: 1px #ccc solid; padding-left:7px">

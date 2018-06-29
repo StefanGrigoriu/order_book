@@ -58,15 +58,6 @@ class UsersController extends BaseController
 			return $this->returnObject(null, '409', 'User could not be saved because there is another user with that email.');
 		}
 		return json_encode($resources);
-		// $user->setName($data['name']);
-		// $user->setEmail($data['email']);
-		// $user->setPassword($data['password']);
-
-
-		// $q = 'INSERT INTO \OrderBook\Models\Users (name, email, password) VALUES ("'.$data['name'].'","'.$data['email'].'", "'.$data['password'].'")';
-
-		// $query = $this->modelsManager->createQuery($q);
-		// $result = $query->execute();
 
 		return json_encode($data);
 	}
@@ -87,6 +78,9 @@ class UsersController extends BaseController
 			$user->setEmail($data['email']);
 		if(isset($data['mobile_no']))
 			$user->setMobileNo($data['mobile_no']);
+		if(isset($data['picture']))
+			$user->setPicture($data['picture']);
+			
 		if(isset($data['new_password']) && isset($data['confirm_password']))
 		{
 			$user->setPassword(sha1($data['new_password']));

@@ -1,0 +1,21 @@
+<div class="col-md-12 margin-top-10" ng-repeat="req in temp.requests">
+	<h4><strong>Name:</strong>  {{req.name}}</h4>
+	<h4><strong>Method:</strong>  <span ng-class="req.method == 'GET' ? 'color-green' : req.method == 'POST' ? 'color-orange': 'color-red'">{{req.method}}</span></h4>
+	<h4><strong>Uri:</strong> <span style="font-style:italic"> {{req.url}}</span> </h4>
+		<uib-accordion close-others="true">
+					<uib-accordion-group>
+						<uib-accordion-heading>
+							Expand to view paramters
+						</uib-accordion-heading>
+						<pre ng-bind-html="jsonHighlight(req.params);"></pre>
+					</uib-accordion-group>
+				</uib-accordion>
+	<uib-accordion close-others="true">
+					<uib-accordion-group>
+						<uib-accordion-heading>
+							Expand response example
+						</uib-accordion-heading>
+						<pre ng-bind-html="jsonHighlight(req.response);"></pre>
+					</uib-accordion-group>
+				</uib-accordion>
+</div>

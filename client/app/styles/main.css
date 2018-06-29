@@ -1,8 +1,36 @@
+.margin-top-10{
+  margin-top:10px;
+}
+
+.margin-top-20{
+  margin-top:20px;
+}
+
 .browsehappy {
   margin: 0.2em 0;
   background: #ccc;
   color: #000;
   padding: 0.2em 0;
+}
+
+.color-orange {
+  color:orange;
+}
+
+.color-green {
+  color:green;
+}
+
+.color-blue {
+  color:blue;
+}
+
+.color-red {
+  color:red;
+}
+
+.color-red, .color-blue, .color-green, .color-orange {
+   font-weight:bold;
 }
 
 body {

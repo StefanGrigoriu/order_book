@@ -1,5 +1,6 @@
 <?php
 namespace OrderBook\Controllers;
+use \Phalcon\Di;
 
 class BaseController extends \Phalcon\DI\Injectable
 {
@@ -84,4 +85,14 @@ class BaseController extends \Phalcon\DI\Injectable
 
 			return true;
 		}
+
+		public function rawSql($sql)
+	{
+		$di = Di::getDefault();
+		$connection  = $di->getDb();
+		$data       = $connection->query($sql);
+		$data->setFetchMode(\Phalcon\Db::FETCH_ASSOC);
+		$results    = $data->fetchAll();
+		return $results;
+	}
 	}

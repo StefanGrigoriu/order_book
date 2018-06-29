@@ -13,7 +13,7 @@ use Phalcon\Http\Response;
 use Phalcon\Db\Adapter\Pdo\Mysql as PdoMysql;
 use  Phalcon\Mvc\Model\Manager as ModelsManager;
 use Phalcon\Registry;
-
+require("./libs/sendgrid-php/sendgrid-php.php");
 // function errorHandler($code, $error_message)
 // {
 //     throw new \OrderBook\Exceptions\HTTPException($error_message, '500');
@@ -30,6 +30,7 @@ $loader->registerNamespaces(
         , 'OrderBook\Controllers' => __DIR__ . '/controllers/'
         , 'OrderBook\Utils' => __DIR__.'/utils/'
         , 'OrderBook\Exceptions' => __DIR__.'/exceptions/'
+                , 'OrderBook\Libs' => __DIR__.'/libs/'
     ]
 );
 

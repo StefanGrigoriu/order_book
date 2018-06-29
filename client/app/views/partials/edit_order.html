@@ -37,6 +37,9 @@
 				<div class="form-group">
 					<label>Client: </label><input type="text" name="client_name" ng-model="ceva.client_name" class="form-control">
 				</div>
+				<div class="form-group">
+					<label>Email: </label><input type="email" name="client_email" ng-model="ceva.client_email" class="form-control">
+				</div>
 				<div ng-if="!ceva.is_new" class="form-group">
 					<label>Status: </label><input type="text" name="status" ng-model="ceva.status" class="form-control">
 				</div>
@@ -62,8 +65,8 @@
 			</div>
 		</div>
 		<div class="form-group" style="margin-left:10px">
-			<span><strong>Distance:</strong>	{{routeInfo.distance}} </br></span>
-			<span>	<strong>Duration:</strong>	{{routeInfo.duration}}</span>
+			<span><strong>Distance:</strong>	{{ceva.distance_text}} </br></span>
+			<span>	<strong>Duration:</strong>	{{ceva.duration_text}}</span>
 		</div>
 	</div>
 
